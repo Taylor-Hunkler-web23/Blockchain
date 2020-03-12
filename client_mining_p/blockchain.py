@@ -145,7 +145,7 @@ blockchain = Blockchain()
 @app.route('/mine', methods=['POST'])
 def mine():
     
-    # Run the proof of work algorithm to get the next proof
+    #Use `data = request.get_json()` to pull the data out of the POST
     data = request.get_json()
    
     if 'proof' not in data or 'id' not in data:
