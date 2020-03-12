@@ -147,33 +147,38 @@ def mine():
     
     # Run the proof of work algorithm to get the next proof
     data = request.get_json()
-    # Forge the new Block by adding it to the chain with the proof
    
-    if 'proof' not in data or 'id not in data':
+    if 'proof' not in data or 'id' not in data:
         response={
             'message':"No proof or ID"
     }
         return jsonify(response), 400
 
+   
+
+        #check proof valid
     block_string = json.dumps(blockchain.last_block, sort_keys=True)
+
     if blockchain.valid_proof(block_string, data['proof']):
-        
+
+# Forge the new Block by adding it to the chain with the proof
+
         previous_hash = blockchain.hash(blockchain.last_block)
         block = blockchain.new_block(data['proof'], previous_hash)
 
         response = {
-            'Success':'success',
+            'message':'New Block Forged',
             'new_block': block
         }
 
         return jsonify(response), 200
     else:
         response = {
-            'Failure':'failure',
+            'message':'failure',
             
         }
 
-        return jsonify(response), 400
+        return jsonify(response), 200
         
 
 
